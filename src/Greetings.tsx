@@ -11,7 +11,7 @@ type GreetingProps = { // 이 컴포넌트의 props선언
 
 function Greetings ({name, desc, optional, print}: GreetingProps) {
   const handleClick = () => {
-    print(name)
+    print(name) // props로 받은 name값
   }
   return (
     <div>
