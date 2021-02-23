@@ -3,7 +3,7 @@ import Counter from './Counter';
 import Greetings from './Greetings';
 import MyForm from './MyForm';
 
-type Prams = {
+type params = {
   title: string,
   desc: string
 }
@@ -12,9 +12,10 @@ function Practice () {
   const print = (text: string): void => {
     console.log('text', text)
   }
-  const onSubmit = (form: Prams) => {
+  const onSubmit = (form: params) => {
     console.log('form', form)
   }
+
   return (
     <>
       <Greetings

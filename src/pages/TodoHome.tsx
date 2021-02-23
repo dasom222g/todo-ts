@@ -2,7 +2,7 @@ import React from 'react';
 import TodoForm from '../components/TodoForm';
 import TodoList from '../components/TodoList';
 
-export interface prams {
+export interface params { // object 초기값 세팅
   id: number,
   title: string,
   desc: string,
@@ -10,7 +10,7 @@ export interface prams {
 }
 
 type TodoHomeProps = {
-  todoListPass: prams[],
+  todoListPass: params[],
   selectedTodoFinal: (id: number) => void
   addTodoFinal: (title: string) => void,
   completeTodoFinal: (id: number) => void

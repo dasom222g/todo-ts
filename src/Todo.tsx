@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import TodoHome from './pages/TodoHome'
 import TodoUpdate from './pages/TodoUpdate'
 
-export interface prams { // object 초기값 세팅
+export interface params { // object 초기값 세팅
   id: number,
   title: string,
   desc: string,
@@ -14,10 +14,15 @@ export interface prams { // object 초기값 세팅
 
 function Todo () {
   // 로직 부분
-  const [todoList, setTodoList] = useState<prams[]>([])
-  const [selectedItem, setSelectedItem] = useState<prams>()
+  const [todoList, setTodoList] = useState<params[]>([])
+  const [selectedItem, setSelectedItem] = useState<params>({
+    id: 0,
+    title: '',
+    desc: '',
+    isComplete: false
+  })
 
-  const addTodo = (title: string) => {
+  const addTodo = (title: string): void => {
     const newTodoList = {
       id: todoList.length + 1,
       title,
@@ -33,7 +38,7 @@ function Todo () {
     setTodoList([...todoList, newTodoList])
   }
 
-  const completeTodo = (id: number) => {
+  const completeTodo = (id: number):void => {
     console.log('id', id)
     const _todoList = [...todoList]
     const completeTodoList = _todoList.map(item => {
@@ -45,7 +50,7 @@ function Todo () {
     setTodoList(completeTodoList)
   }
 
-  const removeTodo = (id: number) => {
+  const removeTodo = (id: number): void => {
     const _todoList = [...todoList]
     const removeArr = _todoList.filter(item => item.id !== id)
     removeArr.map((item, index) => {
@@ -56,12 +61,31 @@ function Todo () {
     setTodoList(removeArr)
   }
 
-  const selectedTodo = (id: number) => {
+  const selectedTodo = (id: number): void => {
     console.log('selectedTodo', id)
     const _todoList = [...todoList]
     const selectedItem = _todoList.filter(item => item.id === id)
-    console.log('selectedItem', {...selectedItem})
     setSelectedItem(selectedItem[0])
+  }
+
+  const updateTodo = (updateItem: params): void => {
+    console.log('updateItem', updateItem)
+    const _todoList = [...todoList]
+    _todoList.map(item => {
+      if (item.id === updateItem.id) {
+        const {title, desc} = updateItem
+        item.title = title
+        item.desc = desc
+      }
+      return item
+    })
+    setTodoList(_todoList)
+    // setSelectedItem({
+    //   id: 0,
+    //   title: '',
+    //   desc: '',
+    //   isComplete: false
+    // })
   }
   // 화면 부분
   return (
@@ -82,10 +106,11 @@ function Todo () {
             exact
           />
           <Route
-            path="/update"
+            path="/update/:itemId"
             render={() =>
               <TodoUpdate
                 selectedItemPass={selectedItem}
+                updateTodoFinal={updateTodo}
               />
             }
           />

@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 
-type Prams = {
+type params = { // 객체
   title: string,
   desc: string
 }
 
 type MyFormProps = {
-  onSubmit: (form: Prams) => void
+  onSubmit: (form: params) => void
 }
 
 function MyForm({onSubmit}: MyFormProps) {
@@ -19,7 +19,7 @@ function MyForm({onSubmit}: MyFormProps) {
   const change = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
     setFormData({
-      ...formData, //객체 복사
+      ...formData, // 객체 복사
       [name]: value // 키값에 value값으로 변경
     })
   }

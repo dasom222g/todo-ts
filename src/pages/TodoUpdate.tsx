@@ -1,8 +1,7 @@
 import React from 'react';
-import TodoForm from '../components/TodoForm';
-import TodoNoteForm from '../components/TodoNoteForm';
+import TodoUpdateForm from '../components/TodoUpdateForm';
 
-export interface prams {
+export interface params { // object 초기값 세팅
   id: number,
   title: string,
   desc: string,
@@ -10,25 +9,28 @@ export interface prams {
 }
 
 type TodoUpdateProps = {
-  selectedItemPass: prams
+  selectedItemPass: params,
+  updateTodoFinal: (updateItem: params) => void
 }
 
-function TodoUpdate({selectedItemPass}: TodoUpdateProps) {
+function TodoUpdate({selectedItemPass, updateTodoFinal}: TodoUpdateProps) {
   // 로직 부분
+  const updateTodo = (updateItem: params) => updateTodoFinal(updateItem) // 값 넘겨주기
   // 화면 부분
   return (
-    <div>
-      <header>
-        <h2 className="todo__title">What’s the Plan for Today?</h2>
-      </header>
-      <TodoForm selectedItem={selectedItemPass} />
-      <TodoNoteForm />
-    </div>
+    <>
+    {selectedItemPass.title ? (
+      <>
+        <header>
+          <h2 className="todo__title">What’s the Plan for Today?</h2>
+        </header>
+        <TodoUpdateForm selectedItem={selectedItemPass} updateTodo={updateTodo} />
+      </>
+      ) : (<div>선택된 값이 없습니다</div>)
+    }
+    </>
   )
 }
 
-TodoUpdate.defaultProps = {
-  selectedItemPass: null,
-}
 
 export default TodoUpdate

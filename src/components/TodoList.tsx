@@ -4,7 +4,7 @@ import {GoCheck} from 'react-icons/go'
 import {RiCloseCircleLine} from 'react-icons/ri'
 import {TiEdit} from 'react-icons/ti'
 
-export interface prams {
+export interface params { // object 초기값 세팅
   id: number,
   title: string,
   desc: string,
@@ -12,7 +12,7 @@ export interface prams {
 }
 
 type todoListProps = {
-  todoList: prams[],
+  todoList: params[],
   selectedTodo: (id: number) => void
   completeTodo: (id: number) => void
   removeTodo: (id: number) => void
