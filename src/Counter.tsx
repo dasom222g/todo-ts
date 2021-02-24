@@ -9,6 +9,7 @@ function Counter() {
   }
   return (
     <div>
+      <strong>useState 사용</strong>
       <div>{number}</div>
       <button type="button" onClick={onIncrease}>count +1</button>
       <button type="button" onClick={onDecrease}>count -1</button>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import TodoForm from '../components/TodoForm';
 import TodoList from '../components/TodoList';
 
@@ -17,16 +17,17 @@ type TodoHomeProps = {
   removeTodoFinal: (id: number) => void
 }
 
-function TodoHome({todoListPass, selectedTodoFinal, addTodoFinal, completeTodoFinal, removeTodoFinal}: TodoHomeProps) {
+const TodoHome = React.memo(function TodoHome({todoListPass, selectedTodoFinal, addTodoFinal, completeTodoFinal, removeTodoFinal}: TodoHomeProps) {
   // 로직 부분
-  const selectedTodo = (id: number) => selectedTodoFinal(id) // 값 넘겨주기
+  const selectedTodo = useCallback((id: number) => selectedTodoFinal(id), [selectedTodoFinal]) // 값 넘겨주기
 
-  const addTodo = (title: string) => addTodoFinal(title) // 값 넘겨주기
+  const addTodo = useCallback((title: string) => addTodoFinal(title), [addTodoFinal]) // 값 넘겨주기
 
-  const completeTodo = (id: number) => completeTodoFinal(id) // 값 넘겨주기
+  const completeTodo = useCallback((id: number) => completeTodoFinal(id), [completeTodoFinal]) // 값 넘겨주기
 
-  const removeTodo = (id: number) => removeTodoFinal(id) // 값 넘겨주기
+  const removeTodo = useCallback((id: number) => removeTodoFinal(id), [removeTodoFinal]) // 값 넘겨주기
   // 화면 부분
+  console.log('TodoHome render')
   return (
     <>
       <header>
@@ -36,6 +37,9 @@ function TodoHome({todoListPass, selectedTodoFinal, addTodoFinal, completeTodoFi
       <TodoList todoList={todoListPass} completeTodo={completeTodo} removeTodo={removeTodo} selectedTodo={selectedTodo} />
     </>
   )
-}
+})
 
-export default TodoHome
+export default React.memo(
+  TodoHome,
+  (preveProps, nextProps) => preveProps.todoListPass === nextProps.todoListPass
+)

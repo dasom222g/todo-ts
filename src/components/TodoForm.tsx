@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 
 type TodoFormProps = {
   addTodo: (title: string) => void
@@ -7,23 +7,23 @@ type TodoFormProps = {
 function TodoForm({addTodo}: TodoFormProps) {
   // 로직 부분
   const [title, setTitle] = useState<string>('')
+  const inputRef = useRef<HTMLInputElement>(null)
 
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
-  }
+  }, [])
 
-  const handleSubmit = (e :React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((e :React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     addTodo(title)
     setTitle('')
-  }
+  }, [title, addTodo])
 
-  const inputRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus()
   })
   // 화면 부분
+  console.log('TodoForm render')
   return (
     <section>
       <div className="form">
@@ -52,4 +52,4 @@ function TodoForm({addTodo}: TodoFormProps) {
   )
 }
 
-export default TodoForm
+export default React.memo(TodoForm)

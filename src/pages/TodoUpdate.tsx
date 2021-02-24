@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import TodoUpdateForm from '../components/TodoUpdateForm';
 
 export interface params { // object 초기값 세팅
@@ -9,17 +9,18 @@ export interface params { // object 초기값 세팅
 }
 
 type TodoUpdateProps = {
-  selectedItemPass: params,
+  selectedItemPass: params | null,
   updateTodoFinal: (updateItem: params) => void
 }
 
-function TodoUpdate({selectedItemPass, updateTodoFinal}: TodoUpdateProps) {
+const TodoUpdate = React.memo(function TodoUpdate({selectedItemPass, updateTodoFinal}: TodoUpdateProps) {
   // 로직 부분
-  const updateTodo = (updateItem: params) => updateTodoFinal(updateItem) // 값 넘겨주기
+  const updateTodo = useCallback((updateItem: params) => updateTodoFinal(updateItem), [updateTodoFinal]) // 값 넘겨주기
   // 화면 부분
+  console.log('TodoUpdate render')
   return (
     <>
-    {selectedItemPass.title ? (
+    {selectedItemPass ? (
       <>
         <header>
           <h2 className="todo__title">What’s the Plan for Today?</h2>
@@ -30,7 +31,7 @@ function TodoUpdate({selectedItemPass, updateTodoFinal}: TodoUpdateProps) {
     }
     </>
   )
-}
+})
 
 
-export default TodoUpdate
+export default React.memo(TodoUpdate)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {GoCheck} from 'react-icons/go'
 import {RiCloseCircleLine} from 'react-icons/ri'
@@ -20,7 +20,20 @@ type todoListProps = {
 
 function TodoList({todoList, selectedTodo, completeTodo, removeTodo}: todoListProps) {
   // 로직 부분
+  const onCompleteTodo = useCallback(id => {
+    completeTodo(id)
+  }, [completeTodo])
+
+  const onSelected = useCallback(id => {
+    selectedTodo(id)
+  }, [selectedTodo])
+
+  const onRemoveTodo = useCallback(id => {
+    removeTodo(id)
+  }, [removeTodo])
+
   // 화면 부분
+  console.log('TodoList render')
   return (
     <section>
       <ul className="todo__list">
@@ -33,7 +46,7 @@ function TodoList({todoList, selectedTodo, completeTodo, removeTodo}: todoListPr
                     <input
                       type="checkbox"
                       checked={item.isComplete ? true : false}
-                      onChange={() => completeTodo(item.id)}
+                      onChange={() => onCompleteTodo(item.id)}
                     />
                     <i className="todo__item-check-icon" />
                     <GoCheck className="todo__item-check-icon complete" />
@@ -44,8 +57,8 @@ function TodoList({todoList, selectedTodo, completeTodo, removeTodo}: todoListPr
                     <Link
                       className="todo__item-button"
                       to={`/update/${item.id}`}
-                      onClick={() => selectedTodo(item.id)}
-                    >
+                      onClick={() => onSelected(item.id)}
+                      >
                       <TiEdit
                         className="todo__item-button-icon update"
                       />
@@ -53,7 +66,7 @@ function TodoList({todoList, selectedTodo, completeTodo, removeTodo}: todoListPr
                     <button
                       type="button"
                       className="todo__item-button"
-                      onClick={()=> removeTodo(item.id)}
+                      onClick={()=> onRemoveTodo(item.id)}
                     >
                       <RiCloseCircleLine
                         className="todo__item-button-icon delete"
@@ -69,4 +82,4 @@ function TodoList({todoList, selectedTodo, completeTodo, removeTodo}: todoListPr
   )
 }
 
-export default TodoList
+export default React.memo(TodoList)

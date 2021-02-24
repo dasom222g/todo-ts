@@ -1,5 +1,6 @@
 import React from 'react';
-import Counter from './Counter';
+// import Counter from './Counter';
+import CounterReducer from './CounterReducer';
 import Greetings from './Greetings';
 import MyForm from './MyForm';
 
@@ -23,7 +24,8 @@ function Practice () {
         optional={'option입니다'}
         print={print}
       />
-      <Counter />
+      {/* <Counter /> */}
+      <CounterReducer />
       <MyForm onSubmit={onSubmit} />
     </>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import Todo from './Todo';
-// import Practice from './Practice';
+import Practice from './Practice';
 
 function App () {
 

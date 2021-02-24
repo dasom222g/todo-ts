@@ -126,6 +126,7 @@ body .k-widget{
 textarea{
   height: inherit;
   line-height: inherit;
+  box-sizing: border-box;
 }
 /* Change autocomplete styles in WebKit */
 input:-webkit-autofill,
