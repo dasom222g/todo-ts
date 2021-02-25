@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-function useInputs(initialForm: object) {
+function useInputs<T1>(initialForm: T1):[T1, (e: any) => void, () => void] {
   const [form, setForm] = useState(initialForm)
 
   const onChange = useCallback(e => {

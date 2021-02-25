@@ -1,5 +1,6 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react'
+import React, {useEffect, useRef, useCallback} from 'react'
 import useReactRouter from 'use-react-router'
+import useInputs from '../hook/useInputs';
 
 export interface params { // object 초기값 세팅
   id: number,
@@ -16,7 +17,7 @@ type TodoUpdateFormProps = {
 function TodoUpdateForm({selectedItem, updateTodo}: TodoUpdateFormProps) {
   // 로직 부분
   const { history, match, location } = useReactRouter()
-  const [updateData, setUpdateData] = useState(selectedItem)
+  const [updateData, onChange, reset] = useInputs(selectedItem)
   const titleRef = useRef<HTMLInputElement>(null)
   const descRef = useRef<HTMLTextAreaElement>(null)
 
@@ -28,12 +29,8 @@ function TodoUpdateForm({selectedItem, updateTodo}: TodoUpdateFormProps) {
   }, [descRef])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>): void => {
-    const {name, value} = e.target
-    setUpdateData({
-      ...updateData,
-      [name]: value
-    })
-  }, [updateData])
+    onChange(e)
+  }, [onChange])
 
   const goHome = useCallback(():void => {
     history.push('/')
@@ -44,8 +41,9 @@ function TodoUpdateForm({selectedItem, updateTodo}: TodoUpdateFormProps) {
     if (window.confirm('Are you sure you wish to update this item?')) {
       goHome()
       updateTodo(updateData)
+      reset()
     }
-  }, [goHome, updateTodo, updateData])
+  }, [updateData, goHome, updateTodo, reset])
 
   const handleCancel = useCallback(() => {
     if (window.confirm('Are you sure to cancel?')) {

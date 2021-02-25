@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
+import useInputs from '../hook/useInputs';
 
 type TodoFormProps = {
   addTodo: (title: string) => void
@@ -6,18 +7,23 @@ type TodoFormProps = {
 
 function TodoForm({addTodo}: TodoFormProps) {
   // 로직 부분
-  const [title, setTitle] = useState<string>('')
+  const [form, onChange, reset] = useInputs({
+    title: ''
+  })
+
+  const {title} = form
+
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value)
-  }, [])
+    onChange(e)
+  }, [onChange])
 
   const handleSubmit = useCallback((e :React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     addTodo(title)
-    setTitle('')
-  }, [title, addTodo])
+    reset()
+  }, [title, addTodo, reset])
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus()
@@ -33,7 +39,7 @@ function TodoForm({addTodo}: TodoFormProps) {
               className="form__element"
               id="title"
               name="title"
-              type="text"
+              type="title"
               placeholder="Write a new todo"
               value={title}
               onChange={handleChange}
