@@ -1,24 +1,11 @@
 import React, {useReducer} from 'react';
+import { countReducer } from './countReducer';
 
-type Action = { type: 'INCREASE' } | { type: 'DECREASE' } | { type: 'RESET' }
-
-const reducer = (state: number, action: Action): number => {
-  switch (action.type) {
-    case 'INCREASE':
-      return state + 1
-    case 'DECREASE':
-      return state - 1
-    case 'RESET':
-      return 0
-    default:
-      return state
-      // throw new Error('no action')
-  }
-}
+export type Action = { type: 'INCREASE' } | { type: 'DECREASE' } | { type: 'RESET' }
 
 function CounterReducer() {
   // 로직 부분
-  const [count, dispatch] = useReducer(reducer, 0)
+  const [count, dispatch] = useReducer(countReducer, 0)
   const onIncrease = () => dispatch({ type: 'INCREASE'})
   const onDecrease = () => {
     if (count <= 0) return
