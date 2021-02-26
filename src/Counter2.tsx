@@ -3,7 +3,7 @@ import { countReducer } from './countReducer';
 
 export type Action = { type: 'INCREASE' } | { type: 'DECREASE' } | { type: 'RESET' }
 
-function CounterReducer() {
+function Counter2() {
   // 로직 부분
   const [count, dispatch] = useReducer(countReducer, 0)
   const onIncrease = () => dispatch({ type: 'INCREASE'})
@@ -25,4 +25,4 @@ function CounterReducer() {
   )
 }
 
-export default CounterReducer
+export default Counter2

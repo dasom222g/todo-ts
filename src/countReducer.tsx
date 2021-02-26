@@ -1,4 +1,4 @@
-import { Action } from './CounterReducer';
+import { Action } from './Counter2';
 
 export function countReducer(state: number, action: Action): number {
   switch (action.type) {

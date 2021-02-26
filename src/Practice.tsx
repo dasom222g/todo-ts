@@ -1,6 +1,6 @@
 import React from 'react';
 // import Counter from './Counter';
-import CounterReducer from './CounterReducer';
+import Counter2 from './Counter2';
 import Greetings from './Greetings';
 import MyForm from './MyForm';
 
@@ -25,7 +25,7 @@ function Practice () {
         print={print}
       />
       {/* <Counter /> */}
-      <CounterReducer />
+      <Counter2 />
       <MyForm onSubmit={onSubmit} />
     </>
   );
